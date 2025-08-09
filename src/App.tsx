@@ -218,7 +218,7 @@ Notes
           >
             AI
           </span>
-          One-Shot Accessibility Challange
+          One-Shot Accessibility Challenge
         </h1>
         <h3 className="text-xl sm:text-xl font-semibold tracking-tight flex items-center gap-3">
           Single prompt in, raw component out.
