@@ -54,3 +54,7 @@ npm run build
 # Preview production build
 npm run preview
 ```
+
+## Running _Not_ Locally
+
+[View Project in CodeSandbox](https://codesandbox.io/p/github/jcorradino/AI-Accessibility-Gauntlet/main)
