@@ -22,3 +22,16 @@ export const slides: Slide[] = [
     description: "View of Phare de Kermorvan - Le Conquet, France",
   },
 ];
+
+export type CarouselProps = {
+  slides: Slide[];
+  ariaLabel?: string;
+  loop?: boolean;
+  autoPlay?: boolean;
+  interval?: number;
+  initialIndex?: number;
+  showDots?: boolean;
+  showPlayPause?: boolean;
+  className?: string;
+  onIndexChange?: (i: number) => void;
+};

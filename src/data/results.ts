@@ -117,6 +117,62 @@ export const resultsByModel: Record<string, AuditResults> = {
     points: 13, // 12 passes × 1 + 0 partials × 0.5 + 8 fails × 0
     percent: 61.9, // 12 / 20 × 100
   },
+  "gpt-oss-20b": {
+    itemsScored: 21,
+    pass: [
+      {
+        text: "Tab and Shift+Tab move through interactive elements in page order.",
+      },
+      { text: "Buttons are native <button>s and behave like buttons." },
+      { text: "Activating Previous/Next does not move focus." },
+      { text: 'Carousel container uses role="region".' },
+      { text: "No keyboard traps detected." },
+      { text: "All interactive elements have a visible focus indicator." },
+      { text: "Focus indicators meet contrast." },
+      { text: "All items meet color contrast." },
+    ],
+    partial: [
+      {
+        text: "Carousel has an accessible name via aria-label, but it is not descriptive (label is just 'carousel').",
+      },
+      {
+        text: "Auto-rotate stops on interaction and resumes only via the rotation control, but does not pause when any element receives focus.",
+      },
+    ],
+    fail: [
+      {
+        text: "Rotation control is not first in the tab order inside the carousel.",
+      },
+      { text: 'Missing aria-roledescription="carousel" on the container.' },
+      {
+        text: "Rotation control lacks an accessible name that describes the action.",
+      },
+      {
+        text: "Rotation control label does not change with state (e.g., Start/Stop slide rotation).",
+      },
+      {
+        text: 'Each slide container does not have role="group" with aria-roledescription="slide".',
+      },
+      {
+        text: "Each slide lacks its own accessible name on the slide container.",
+      },
+      {
+        text: 'Picker buttons are not grouped in an element with role="group".',
+      },
+      {
+        text: 'The picker group lacks an accessible label like aria-label="Choose slide to display".',
+      },
+      { text: "Picker controls are not native buttons." },
+      { text: "Picker button names don't match the slide names." },
+      {
+        text: 'Currently visible slide\'s picker button does not have aria-disabled="true".',
+      },
+      { text: "No live region behavior to announce slide changes." },
+    ],
+    notScored: ["Tabs pattern for slide pickers (not applicable here)."],
+    points: 9, // 8 passes × 1 + 2 partial × 0.5 + 12 fails × 0
+    percent: 42.9, // 9 / 21 × 100
+  },
   "claude-sonnet-4": {
     itemsScored: 18,
     pass: [
