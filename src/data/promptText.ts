@@ -59,6 +59,7 @@ Requirements
 - Keep the DOM simple. No portals. No global listeners.
 - Use Tailwind utility classes for layout and visuals.
 - Render a small placeholder if slides is empty.
+- The carousel should autoplay between slides.
 
 Notes
 - Do not include build config or package.json. Only the component file.

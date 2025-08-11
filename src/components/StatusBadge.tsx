@@ -1,20 +1,31 @@
+// number | "DNF"
 import type { AccessibilityScore } from "@/data/models";
 
 const RANGES = [
   {
+    ok: (s: number) => s >= 85,
+    label: (s: number) => `some gaps (${s.toFixed(1)}%)`,
+    cls: "bg-emerald-700 text-white",
+  },
+  {
     ok: (s: number) => s >= 70,
-    label: (s: number) => `expected ok (${s.toFixed(1)}%)`,
-    cls: "bg-emerald-600 text-white",
+    label: (s: number) => `moderate gaps (${s.toFixed(1)}%)`,
+    cls: "bg-lime-700 text-white",
+  },
+  {
+    ok: (s: number) => s >= 55,
+    label: (s: number) => `barriers (${s.toFixed(1)}%)`,
+    cls: "bg-amber-700 text-white",
   },
   {
     ok: (s: number) => s >= 40,
-    label: (s: number) => `borderline (${s.toFixed(1)}%)`,
-    cls: "bg-amber-600 text-white",
+    label: (s: number) => `significant (${s.toFixed(1)}%)`,
+    cls: "bg-orange-700 text-white",
   },
   {
     ok: (s: number) => s >= 0,
-    label: (s: number) => `expect breakage (${s.toFixed(1)}%)`,
-    cls: "bg-rose-600 text-white",
+    label: (s: number) => `What carousel..? (${s.toFixed(1)}%)`,
+    cls: "bg-rose-800 text-white",
   },
 ];
 
@@ -30,7 +41,7 @@ export function StatusBadge({
 
   if (score === "DNF") {
     label = "DNF";
-    cls = "bg-rose-600 text-white";
+    cls = "bg-slate-600 text-white";
   } else if (typeof score === "number") {
     const match = RANGES.find((r) => r.ok(score));
     if (match) {

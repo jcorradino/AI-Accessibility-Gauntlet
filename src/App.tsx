@@ -245,7 +245,7 @@ function ModelPage() {
           <LazyCarousel
             slides={slides}
             ariaLabel={`${model.name} image carousel`}
-            autoPlay={false}
+            autoPlay={true}
             loop
             showDots
             showPlayPause
