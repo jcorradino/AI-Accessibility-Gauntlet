@@ -9,7 +9,7 @@ import {
 
 import { slides, CarouselProps } from "@/data/carousel";
 import { models } from "@/data/models";
-import { promptText } from "@/data/promptText";
+import { promptText, accessiblePromptText } from "@/data/promptText";
 
 import { AuditResultsPanel } from "@/components/AuditResultsPanel";
 import { resultsByModel } from "@/data/results";
@@ -63,6 +63,11 @@ export default function App() {
 }
 
 function Home() {
+  const inaccessibleModels = models.filter(
+    (m) => m.promptType === "inaccessible"
+  );
+  const accessibleModels = models.filter((m) => m.promptType === "accessible");
+
   return (
     <main
       id="main"
@@ -91,14 +96,14 @@ function Home() {
           Purpose
         </h2>
 
-        <p className="mt-2 max-w-2xl text-sm text-gray-700 dark:text-gray-300">
+        <p className="mt-2 text-sm text-gray-700 dark:text-gray-300">
           This page sends one prompt to a chosen model, drops the returned code
           into a React wrapper, and runs it with the same slides. No edits. No
           fixes. The goal is to see what a typical dev request produces and how
           accessible it is.
         </p>
 
-        <p className="mt-2 max-w-2xl text-sm text-gray-700 dark:text-gray-300">
+        <p className="mt-2 text-sm text-gray-700 dark:text-gray-300">
           Each result is reviewed against the{" "}
           <a
             href="https://www.w3.org/WAI/ARIA/apg/patterns/carousel/"
@@ -167,38 +172,77 @@ function Home() {
         aria-labelledby="toc-heading"
       >
         <h3 className="text-xl sm:text-xl font-semibold tracking-tight flex items-center gap-3 mb-3">
-          Model Tests
+          Standard Prompt Model Tests
         </h3>
+        <p className="mt-2 mb-4 text-sm text-gray-700 dark:text-gray-300">
+          These models were given a single coding prompt {"(displayed below)"}{" "}
+          with no additional guidance on accessibility. The goal is to see what
+          a "typical" request produces without nudging for accessible
+          implementation.
+        </p>
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {models.map((m) => (
+          {inaccessibleModels.map((m) => (
             <ModelCard key={m.slug} m={m} />
           ))}
         </ul>
+      </section>
 
-        <div className="rounded-2xl mt-5 border border-gray-200/70 dark:border-gray-800/70 bg-white dark:bg-slate-950 shadow-sm overflow-hidden">
-          <div className="flex items-start justify-between gap-3 p-5">
-            <div>
-              <h2 className="text-lg font-semibold tracking-tight">
-                Standardized Prompt
-              </h2>
-              <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
-                This is the same prompt sent to each model above. Only the{" "}
-                <code className="rounded bg-gray-100 dark:bg-slate-800 px-1 py-0.5">
-                  {"{"}model{"}"}-carousel.jsx
-                </code>{" "}
-                component and{" "}
-                <code className="rounded bg-gray-100 dark:bg-slate-800 px-1 py-0.5">
-                  {"{"}model{"}"}Carousel
-                </code>{" "}
-                function changes.
-              </p>
+      <section
+        className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pb-16"
+        aria-labelledby="toc-heading"
+      >
+        <h3 className="text-xl sm:text-xl font-semibold tracking-tight flex items-center gap-3 mb-3">
+          "Accessible" Prompt Model Tests
+        </h3>
+        <p className="mt-2 mb-4 text-sm text-gray-700 dark:text-gray-300">
+          These models received the same coding prompt but with one small
+          change: the words <strong>"Make this accessible"</strong> were added.
+          This tests whether a minimal accessibility instruction significantly
+          improves results.
+        </p>
+        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {accessibleModels.map((m) => (
+            <ModelCard key={m.slug} m={m} />
+          ))}
+        </ul>
+      </section>
+
+      <section
+        aria-labelledby="prompts-heading"
+        className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pb-16"
+      >
+        <h3 id="prompts-heading" className="text-xl font-semibold mb-3">
+          Standardized Prompts
+        </h3>
+        <p className="text-sm text-gray-600 dark:text-gray-300 mb-6">
+          Below are the exact prompts sent to the models. The only difference in
+          the “Accessible” version is an explicit instruction to meet WCAG 2.2
+          Level AA guidelines.
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="rounded-2xl border border-gray-200/70 dark:border-gray-800/70 bg-white dark:bg-slate-950 shadow-sm overflow-hidden">
+            <div className="p-5 border-b border-gray-200/70 dark:border-gray-800/70">
+              <h4 className="text-lg font-semibold tracking-tight">
+                Standard Prompt
+              </h4>
+            </div>
+            <div className="p-5">
+              <pre className="whitespace-pre-wrap break-words rounded-xl border bg-transparent p-4 font-mono text-xs leading-relaxed tracking-tight">
+                {promptText}
+              </pre>
             </div>
           </div>
 
-          <div className="p-5 pt-0">
-            <div className="relative">
+          <div className="rounded-2xl border border-gray-200/70 dark:border-gray-800/70 bg-white dark:bg-slate-950 shadow-sm overflow-hidden">
+            <div className="p-5 border-b border-gray-200/70 dark:border-gray-800/70">
+              <h4 className="text-lg font-semibold tracking-tight">
+                Accessible Prompt
+              </h4>
+            </div>
+            <div className="p-5">
               <pre className="whitespace-pre-wrap break-words rounded-xl border bg-transparent p-4 font-mono text-xs leading-relaxed tracking-tight">
-                {promptText}
+                {accessiblePromptText}
               </pre>
             </div>
           </div>
